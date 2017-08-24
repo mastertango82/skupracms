@@ -1,12 +1,15 @@
 <?php
 
 if ($usertype > 2) {
+	
+	$frk = BasicConfig::$_prefix;
+	$categories = $frk.'categories';
 
 	if (isset($_GET['content2'])) {
 
 		$link = new DB();
 
-		$query = "DELETE FROM categories WHERE num_art = ? AND cat_id = ?";
+		$query = "DELETE FROM $categories WHERE num_art = ? AND cat_id = ?";
 		$result = $link->DeleteRow($query, [0, $_GET['content2']]);
 
 		if ($result > 0) {
@@ -15,7 +18,7 @@ if ($usertype > 2) {
 	}
 
 	$link = new DB();
-	$query = "SELECT * FROM categories ORDER BY cat_id ASC";
+	$query = "SELECT * FROM $categories ORDER BY cat_id ASC";
 	$result = $link->GetRows($query);
 
 	$output = "<h1>$c[delete_cat]</h1>";

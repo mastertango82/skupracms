@@ -1,6 +1,9 @@
 <?php
 
 if ($usertype == 4) {
+	
+	$frk = BasicConfig::$_prefix;
+	$blocked = $frk.'blocked';
 
 	$output = "<h1>$c[block_ip]</h1>";
 
@@ -9,7 +12,7 @@ if ($usertype == 4) {
 		$ip = $_POST['ip'];
 
 		$link = new DB();
-		$query = "INSERT INTO blocked (ip) VALUES (?)";
+		$query = "INSERT INTO $blocked (ip) VALUES (?)";
 		$result = $link->InsertRow($query, [$ip]);
 	}
 
@@ -18,7 +21,7 @@ if ($usertype == 4) {
 		$ip = $_POST['ip'];
 
 		$link = new DB();
-		$query = "DELETE FROM blocked WHERE ip = ?";
+		$query = "DELETE FROM $blocked WHERE ip = ?";
 		$result = $link->UpdateRow($query, [$ip]);
 	}
 
@@ -41,7 +44,7 @@ if ($usertype == 4) {
 	";
 
 	$link = new DB();
-	$query = "SELECT * FROM blocked";
+	$query = "SELECT * FROM $blocked";
 	$result = $link->GetRows($query);
 
 	if (!empty($result)) {

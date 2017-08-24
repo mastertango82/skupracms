@@ -2,6 +2,11 @@
 
 if ($usertype > 1) {
 	
+	$frk = BasicConfig::$_prefix;
+
+	$articles = $frk.'articles';
+	$users = $frk.'users';
+
 	if (isset($_GET['page'])) {
 		
 		$error = '';
@@ -46,10 +51,10 @@ if ($usertype > 1) {
 			$link = new DB();
 
 			if ($usertype == 4) {
-				$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid AND articles.article_id = ?";
+				$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid AND $articles.article_id = ?";
 				$result = $link->GetRow($query, [$article_id]);
 			} else {
-				$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid AND articles.article_id = ? AND users.username = ?";
+				$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid AND $articles.article_id = ? AND $users.username = ?";
 				$result = $link->GetRow($query, [$article_id, $_SESSION[$site]['username']]);
 			}
 			$_SESSION[$site]['var']['cat_id'] = $result['category_id'];
@@ -144,11 +149,11 @@ if ($usertype > 1) {
 		$link = new DB();
 
 		if ($usertype == 4) {
-			$query0 = "SELECT COUNT(*) FROM articles JOIN users ON articles.author_id = users.userid";
+			$query0 = "SELECT COUNT(*) FROM $articles JOIN $users ON $articles.author_id = $users.userid";
 			$result0 = $link->GetRow($query0);
 		} else {
 
-			$query0 = "SELECT COUNT(*) FROM articles JOIN users ON articles.author_id = users.userid AND users.username = ?";
+			$query0 = "SELECT COUNT(*) FROM $articles JOIN $users ON $articles.author_id = $users.userid AND $users.username = ?";
 			$result0 = $link->GetRow($query0, [$_SESSION[$site]['username']]);	
 		}
 
@@ -159,10 +164,10 @@ if ($usertype > 1) {
 		$num_page = ceil($total/$limit);
 		
 		if ($usertype == 4) {
-			$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid ORDER BY article_id DESC LIMIT $start, $limit";
+			$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid ORDER BY article_id DESC LIMIT $start, $limit";
 			$result = $link->GetRows($query);
 		} else {
-			$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid AND users.username = ? ORDER BY article_id DESC LIMIT $start, $limit";
+			$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid AND $users.username = ? ORDER BY article_id DESC LIMIT $start, $limit";
 			$result = $link->GetRows($query, [$_SESSION[$site]['username']]);
 		}
 

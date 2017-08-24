@@ -12,7 +12,13 @@ if (isset($_GET['content2'])) {
 
 	$link = new DB();
 
-	$query0 = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id AND categories.cat_seo_name = ? AND publish = ?";
+	$frk = BasicConfig::$_prefix;
+	$categories = $frk.'categories';
+	$articles = $frk.'articles';
+	$users = $frk.'users';
+	$comments = $frk.'comments';
+
+	$query0 = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id AND $categories.cat_seo_name = ? AND publish = ?";
 
 	$result0 = $link->GetRow($query0, [$_GET['content2'], 1]);
 	$total = ($result0['num_art']);
@@ -32,19 +38,19 @@ if (isset($_GET['content2'])) {
 		if (isset($_GET['page']) AND $_GET['page'] === 'like') {
 			
 			$order_notice = $c['order_like_ar'];
-			$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid JOIN categories ON articles.category_id = categories.cat_id AND categories.cat_seo_name = ? AND publish = ? ORDER BY like_article DESC LIMIT $start, $limit";
+			$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid JOIN $categories ON $articles.category_id = $categories.cat_id AND $categories.cat_seo_name = ? AND publish = ? ORDER BY like_article DESC LIMIT $start, $limit";
 		} else if (isset($_GET['page']) AND $_GET['page'] === 'dislike') {
 			
 			$order_notice = $c['order_dislike_ar'];
-			$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid JOIN categories ON articles.category_id = categories.cat_id AND categories.cat_seo_name = ? AND publish = ? ORDER BY dislike_article DESC LIMIT $start, $limit";
+			$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid JOIN $categories ON $articles.category_id = $categories.cat_id AND $categories.cat_seo_name = ? AND publish = ? ORDER BY dislike_article DESC LIMIT $start, $limit";
 		} else if (isset($_GET['page']) AND $_GET['page'] === 'old') {
 			
 			$order_notice = $c['order_old_ar'];
-			$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid JOIN categories ON articles.category_id = categories.cat_id AND categories.cat_seo_name = ? AND publish = ? ORDER BY article_id ASC LIMIT $start, $limit";
+			$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid JOIN $categories ON $articles.category_id = $categories.cat_id AND $categories.cat_seo_name = ? AND publish = ? ORDER BY article_id ASC LIMIT $start, $limit";
 		} else {
 			
 			$order_notice = $c['order_new_ar'];
-			$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid JOIN categories ON articles.category_id = categories.cat_id AND categories.cat_seo_name = ? AND publish = ? ORDER BY article_id DESC LIMIT $start, $limit";
+			$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid JOIN $categories ON $articles.category_id = $categories.cat_id AND $categories.cat_seo_name = ? AND publish = ? ORDER BY article_id DESC LIMIT $start, $limit";
 		}
 
 		$result = $link->GetRows($query, [$_GET['content2'], 1]);
@@ -73,7 +79,7 @@ if (isset($_GET['content2'])) {
 			
 			foreach ($result as $article) {
 				
-				$query2 = "SELECT COUNT(*) as total FROM comments WHERE artic_id = ?";
+				$query2 = "SELECT COUNT(*) as total FROM $comments WHERE artic_id = ?";
 				$total = $link->GetRow($query2, [$article['article_id']]);
 				$total = $total['total'];
 

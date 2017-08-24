@@ -2,7 +2,10 @@
 
 $link = new DB();
 
-$query = "SELECT * FROM categories";
+$frk = BasicConfig::$_prefix;
+$categories = $frk.'categories';
+
+$query = "SELECT * FROM $categories";
 $result = $link->GetRows($query);
 
 if (empty($result)) {

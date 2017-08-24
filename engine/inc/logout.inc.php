@@ -11,6 +11,7 @@ if ($usertype > 0) {
 	exit();
 	//
 } else {
+	
 	$output = "<h1>$c[protected]</h1>";
 }
 

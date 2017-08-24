@@ -2,6 +2,9 @@
 
 if ($usertype > 2) {
 	
+	$frk = BasicConfig::$_prefix;
+	$categories = $frk.'categories';
+
 	$e = Language::LangPart('edit');
 	
 	$output = "<h1>$c[update_category]</h1>";
@@ -9,7 +12,7 @@ if ($usertype > 2) {
 	if (isset($_GET['content2'])) {
 
 		$link = new DB();
-		$query1 = "SELECT * FROM categories WHERE cat_id = ?";
+		$query1 = "SELECT * FROM $categories WHERE cat_id = ?";
 		$result1 = $link->GetRow($query1, [$_GET['content2']]);
 
 		$cat = $result1;
@@ -50,7 +53,7 @@ if ($usertype > 2) {
 	} else {
 
 		$link = new DB();
-		$query = "SELECT * FROM categories";
+		$query = "SELECT * FROM $categories";
 		$result = $link->GetRows($query);
 
 		if (!empty($result)) {

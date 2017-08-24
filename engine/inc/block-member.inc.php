@@ -1,17 +1,20 @@
 <?php
 
 if ($usertype == 4) {
-	
+
+	$frk = BasicConfig::$_prefix;
+	$users = $frk.'users';
+
 	if (isset($_POST['submit'])) {
 
 		if (!empty($_POST['username'])) {
 
 			$link = new DB();
-			$query = "SELECT username FROM users WHERE username = ?";
+			$query = "SELECT username FROM $users WHERE username = ?";
 			$result = $link->GetRow($query, [$_POST['username']]);
 
 			if (!empty($result)) {
-				$query2 = "UPDATE users SET usertype = -2 WHERE username = ?";
+				$query2 = "UPDATE $users SET usertype = -2 WHERE username = ?";
 				$result2 = $link->UpdateRow($query2, [$_POST['username']]);
 
 				if ($result2 == 1) {

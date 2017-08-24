@@ -317,7 +317,7 @@ class BasicConfig {\n
 			`username` varchar(32) NOT NULL,
 			`session` varchar(32) NOT NULL,
 			`password` varchar(32) NOT NULL,
-			`gender` varchar(16) NOT NULL,
+			`gender` varchar(16) DEFAULT NULL,
 			`birth` int(4) DEFAULT NULL,
 			`like_user` int(11) NOT NULL DEFAULT '0',
 			`dislike_user` int(11) NOT NULL DEFAULT '0',

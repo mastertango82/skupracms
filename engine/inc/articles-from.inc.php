@@ -6,7 +6,13 @@ if ($usertype > 0) {
 
 		$link = new DB();
 
-		$query = "SELECT userid, username, COUNT(*) FROM articles JOIN users ON articles.author_id = users.userid JOIN categories ON articles.category_id = categories.cat_id AND cat_seo_name != ? AND cat_seo_name != ? AND articles.author_id = ? AND publish = ?";
+		$frk = BasicConfig::$_prefix;
+		$categories = $frk.'categories';
+		$articles = $frk.'articles';
+		$users = $frk.'users';
+		$comments = $frk.'comments';
+
+		$query = "SELECT userid, username, COUNT(*) FROM $articles JOIN $users ON $articles.author_id = $users.userid JOIN $categories ON $articles.category_id = $categories.cat_id AND cat_seo_name != ? AND cat_seo_name != ? AND $articles.author_id = ? AND publish = ?";
 
 		$result = $link->GetRow($query, ['slusalica', 'preuzimanja', $_GET['content2'], 1]);
 		$total = ($result['COUNT(*)']);
@@ -22,19 +28,19 @@ if ($usertype > 0) {
 		if (isset($_GET['page']) AND $_GET['page'] === 'like') {
 			
 			$order_notice = $c['order_like_ar'];
-			$query2 = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id JOIN users ON articles.author_id = users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND users.userid = ? AND publish = ? ORDER BY like_article DESC LIMIT $start, $limit";
+			$query2 = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id JOIN $users ON $articles.author_id = $users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND $users.userid = ? AND publish = ? ORDER BY like_article DESC LIMIT $start, $limit";
 		} else if (isset($_GET['page']) AND $_GET['page'] === 'dislike') {
 
 			$order_notice = $c['order_dislike_ar'];
-			$query2 = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id JOIN users ON articles.author_id = users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND users.userid = ? AND publish = ? ORDER BY dislike_article DESC LIMIT $start, $limit";
+			$query2 = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id JOIN $users ON $articles.author_id = $users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND $users.userid = ? AND publish = ? ORDER BY dislike_article DESC LIMIT $start, $limit";
 		} else if (isset($_GET['page']) AND $_GET['page'] === 'old') {
 
 			$order_notice = $c['order_old_ar'];
-			$query2 = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id JOIN users ON articles.author_id = users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND users.userid = ? AND publish = ? ORDER BY article_id ASC LIMIT $start, $limit";
+			$query2 = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id JOIN $users ON $articles.author_id = $users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND $users.userid = ? AND publish = ? ORDER BY article_id ASC LIMIT $start, $limit";
 		} else {
 
 			$order_notice = $c['order_new_ar'];
-			$query2 = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id JOIN users ON articles.author_id = users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND users.userid = ? AND publish = ? ORDER BY article_id DESC LIMIT $start, $limit";
+			$query2 = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id JOIN $users ON $articles.author_id = $users.userid AND cat_seo_name != ? AND cat_seo_name != ? AND $users.userid = ? AND publish = ? ORDER BY article_id DESC LIMIT $start, $limit";
 		}
 
 		$result2 = $link->GetRows($query2, ['slusalica', 'preuzimanja', $_GET['content2'], 1]);
@@ -61,7 +67,7 @@ if ($usertype > 0) {
 			
 			foreach ($result2 as $article) {
 
-				$query2 = "SELECT COUNT(*) as total FROM comments WHERE artic_id = ?";
+				$query2 = "SELECT COUNT(*) as total FROM $comments WHERE artic_id = ?";
 				$total = $link->GetRow($query2, [$article['article_id']]);
 				$total = $total['total'];
 
@@ -108,8 +114,8 @@ if ($usertype > 0) {
 				";
 			}
 
-			$query_a = "SELECT COUNT(*) FROM articles WHERE category_id = ? AND author_id = ?";
-			$query_d = "SELECT COUNT(*) FROM articles WHERE category_id = ? AND author_id = ?";
+			$query_a = "SELECT COUNT(*) FROM $articles WHERE category_id = ? AND author_id = ?";
+			$query_d = "SELECT COUNT(*) FROM $articles WHERE category_id = ? AND author_id = ?";
 			
 			$count_a = $link->GetRow($query_a, [4, $result['userid']]);
 			$count_a = $count_a['COUNT(*)'];

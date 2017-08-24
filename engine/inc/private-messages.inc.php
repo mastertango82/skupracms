@@ -2,6 +2,9 @@
 
 if ($usertype > 0) {
 	
+	$frk = BasicConfig::$_prefix;
+	$pmessages = $frk.'pmessages';
+
 	$output = "
 		<h1>$c[messages]</h1>
 		<p class='small'>($c[mess_notice])</p>
@@ -43,13 +46,14 @@ if ($usertype > 0) {
 		</form>
 	";
 
-	$query1 = "SELECT * FROM pmessages WHERE sender = ? OR receiver = ? ORDER BY message_id DESC LIMIT 30";
+	$query1 = "SELECT * FROM $pmessages WHERE sender = ? OR receiver = ? ORDER BY message_id DESC LIMIT 30";
 	
 	$user = Engine::UserId($_SESSION[$site]['username']);
 
 	$result1 = $link->GetRows($query1, [$user, $user]);
 	
 	foreach ($result1 as $m) {
+		
 		$sender = Engine::UserFromId($m['sender']);
 		$receiver = Engine::UserFromId($m['receiver']);
 		$output .= "<p><b>$m[date_time]</b> | $c[sender] <b>$sender</b> | $c[receiver] <b>$receiver</b> | <b>$m[message]</b></p>";	

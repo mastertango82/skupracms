@@ -4,7 +4,10 @@ $output0 = '';
 
 $link = new DB();
 
-$query = "SELECT year(odate_ar) AS year, month(odate_ar) AS month, COUNT(*) AS total FROM articles WHERE publish = ? GROUP BY year, month ORDER BY year DESC, month";
+$frk = BasicConfig::$_prefix;
+$articles = $frk.'articles';
+
+$query = "SELECT year(odate_ar) AS year, month(odate_ar) AS month, COUNT(*) AS total FROM $articles WHERE publish = ? GROUP BY year, month ORDER BY year DESC, month";
 $result = $link->GetRows($query, [1]);
 
 $currentyear = null;

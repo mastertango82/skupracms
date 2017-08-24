@@ -2,6 +2,9 @@
 
 if ($usertype == 4) {
 	
+	$frk = BasicConfig::$_prefix;
+	$users = $frk.'users';
+
 	$output = "
 		<h1>$c[delete_member]</h1>
 		<p>$c[delete_member_not]</p>
@@ -18,12 +21,12 @@ if ($usertype == 4) {
 		$username = $_POST['mem'];
 
 		$link = new DB();
-		$query = "SELECT * FROM users WHERE username = ? AND num_art = ?";
+		$query = "SELECT * FROM $users WHERE username = ? AND num_art = ?";
 		$result = $link->GetRow($query, [$username, 0]);
 
 		if (!empty($result)) {
 
-			$query2 = "UPDATE users SET usertype = ? WHERE username = ?";
+			$query2 = "UPDATE $users SET usertype = ? WHERE username = ?";
 			$result2 = $link->UpdateRow($query2, [-3, $username]);
 
 			if ($result2 == 1) {

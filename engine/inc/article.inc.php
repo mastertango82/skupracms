@@ -2,7 +2,13 @@
 
 $link = new DB();
 
-$query = "SELECT * FROM articles JOIN users ON articles.author_id = users.userid AND articles.seo = ? AND publish = ? JOIN categories ON articles.category_id = categories.cat_id";
+$frk = BasicConfig::$_prefix;
+$categories = $frk.'categories';
+$articles = $frk.'articles';
+$users = $frk.'users';
+$comments = $frk.'comments';
+
+$query = "SELECT * FROM $articles JOIN $users ON $articles.author_id = $users.userid AND $articles.seo = ? AND publish = ? JOIN categories ON $articles.category_id = $categories.cat_id";
 $article = $link->GetRow($query, [$content2, 1]);
 
 if (!empty($article)) {
@@ -31,8 +37,8 @@ if (!empty($article)) {
 		}
 	}
 
-	$query2 = "SELECT * FROM comments JOIN users ON comments.user = users.userid AND comments.artic_id = ?";
-	$query22 = "SELECT * FROM comments WHERE user = ? AND artic_id = ?";
+	$query2 = "SELECT * FROM $comments JOIN $users ON $comments.user = $users.userid AND $comments.artic_id = ?";
+	$query22 = "SELECT * FROM $comments WHERE user = ? AND artic_id = ?";
 	$comments2 = $link->GetRows($query2, [$article['article_id']]);
 	$comments22 = $link->GetRows($query22, [0, $article['article_id']]);
 
@@ -96,7 +102,7 @@ if (!empty($article)) {
 		";	
 	}
 
-	$query2 = "SELECT COUNT(*) as total FROM comments WHERE artic_id = ?";
+	$query2 = "SELECT COUNT(*) as total FROM $comments WHERE artic_id = ?";
 	$total = $link->GetRow($query2, [$article['article_id']]);
 	$total = $total['total'];
 
@@ -138,8 +144,8 @@ if (!empty($article)) {
 	$articleid = $article['article_id'];
 	$cate = $article['cat_seo_name'];
 
-	$query = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id AND articles.article_id < ? AND categories.cat_seo_name = ? AND publish = ? ORDER BY articles.article_id DESC LIMIT 1";
-	$query2 = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id AND articles.article_id > ? AND categories.cat_seo_name = ? AND publish = ? ORDER BY articles.article_id ASC LIMIT 1";
+	$query = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id AND $articles.article_id < ? AND $categories.cat_seo_name = ? AND publish = ? ORDER BY $articles.article_id DESC LIMIT 1";
+	$query2 = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id AND $articles.article_id > ? AND $categories.cat_seo_name = ? AND publish = ? ORDER BY $articles.article_id ASC LIMIT 1";
 
 	$l1 = $link->GetRow($query, [$articleid, $cate, 1]);
 	$l2 = $link->GetRow($query2, [$articleid, $cate, 1]);

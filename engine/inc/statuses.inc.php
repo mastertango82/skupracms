@@ -1,5 +1,9 @@
 <?php
 
+$frk = BasicConfig::$_prefix;
+$statuses = $frk.'statuses';
+
+
 if (isset($_POST['submit'])) {
 
 	$status = htmlspecialchars($_POST['status'], ENT_QUOTES);
@@ -22,7 +26,7 @@ if (isset($_POST['submit'])) {
 }
 
 $link = new DB();
-$query = "SELECT * FROM statuses ORDER BY status_id DESC LIMIT 20";
+$query = "SELECT * FROM $statuses ORDER BY status_id DESC LIMIT 20";
 $result = $link->GetRows($query);
 
 $content_0 = "<h1>$c[statuses]</h1>";

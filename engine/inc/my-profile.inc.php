@@ -24,6 +24,9 @@ if ($usertype > 0) {
 	} else if ($result['gender'] == 'female'){
 		
 		$gender = $c['woman'];
+	} else {
+
+		$gender = '';
 	}
 	
 	$adate = explode('-', $result['date_reg']);

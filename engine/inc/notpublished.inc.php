@@ -2,10 +2,14 @@
 
 if ($usertype == 4) {
 	
+	$frk = BasicConfig::$_prefix;
+	$categories = $frk.'categories';
+	$articles = $frk.'articles';
+	
 	if (isset($_POST['submit1'])) {
 
 		$link = new DB();
-		$query = "DELETE FROM articles WHERE article_id = ?";
+		$query = "DELETE FROM $articles WHERE article_id = ?";
 		$result = $link->DeleteRow($query, [$_POST['ariddelete']]);
 
 		if ($result == 1) {
@@ -19,7 +23,7 @@ if ($usertype == 4) {
 		$link = new DB();
 		$userid = Engine::UserId($_POST['author']);
 
-		$query = "UPDATE articles SET author_id = ? WHERE article_id = ?";
+		$query = "UPDATE $articles SET author_id = ? WHERE article_id = ?";
 		$result = $link->UpdateRow($query, [$userid, $_POST['arid']]);
 
 		if ($result == 1) {
@@ -29,7 +33,7 @@ if ($usertype == 4) {
 	}
 
 	$link = new DB();
-	$query = "SELECT * FROM articles JOIN categories ON articles.category_id = categories.cat_id AND publish = ?";
+	$query = "SELECT * FROM $articles JOIN $categories ON $articles.category_id = $categories.cat_id AND publish = ?";
 	$result = $link->GetRows($query, [0]);
 
 	if (!empty($result)) {

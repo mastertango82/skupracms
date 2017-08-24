@@ -7,7 +7,10 @@ if ($usertype == 0) {
 	
 	$link = new DB();
 	
-	$query0 = "SELECT COUNT(*) FROM users WHERE usertype > ?";
+	$frk = BasicConfig::$_prefix;
+	$users = $frk.'users';
+	
+	$query0 = "SELECT COUNT(*) FROM $users WHERE usertype > ?";
 
 	$result0 = $link->GetRow($query0, [-3]);
 	$total = ($result0['COUNT(*)']);
@@ -23,19 +26,19 @@ if ($usertype == 0) {
 	if (isset($_GET['content2']) AND $_GET['content2'] === 'like') {
 		
 		$order_notice = $c['order_like_ar'];
-		$query = "SELECT * FROM users WHERE usertype > ? ORDER BY like_user DESC LIMIT $start, $limit";
+		$query = "SELECT * FROM $users WHERE usertype > ? ORDER BY like_user DESC LIMIT $start, $limit";
 	} else if (isset($_GET['content2']) AND $_GET['content2'] === 'dislike') {
 		
 		$order_notice = $c['order_dislike_ar'];
-		$query = "SELECT * FROM users WHERE usertype > ? ORDER BY dislike_user DESC LIMIT $start, $limit";
+		$query = "SELECT * FROM $users WHERE usertype > ? ORDER BY dislike_user DESC LIMIT $start, $limit";
 	} else if (isset($_GET['content2']) AND $_GET['content2'] === 'old') {
 		
 		$order_notice = $c['order_old_ar'];
-		$query = "SELECT * FROM users WHERE usertype > ? ORDER BY userid ASC LIMIT $start, $limit";
+		$query = "SELECT * FROM $users WHERE usertype > ? ORDER BY userid ASC LIMIT $start, $limit";
 	} else {
 		
 		$order_notice = $c['order_new_ar'];
-		$query = "SELECT * FROM users WHERE usertype > ? ORDER BY userid DESC LIMIT $start, $limit";
+		$query = "SELECT * FROM $users WHERE usertype > ? ORDER BY userid DESC LIMIT $start, $limit";
 	}
 
 	if ($usertype == 4) {
@@ -101,6 +104,9 @@ if ($usertype == 0) {
 			} else if ($result['gender'] == 'female') {
 				
 				$gender = $c['woman'];
+			} else {
+
+				$gender = '';
 			}
 
 			$output .= "

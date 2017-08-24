@@ -11,11 +11,15 @@ if ($usertype == 4) {
 		if (!empty($_POST['username'])) {
 
 			$link = new DB();
-			$query = "SELECT username FROM users WHERE username = ?";
+
+			$frk = BasicConfig::$_prefix;
+			$users = $frk.'users';
+
+			$query = "SELECT username FROM $users WHERE username = ?";
 			$result = $link->GetRow($query, [$username]);
 
 			if (!empty($result)) {
-				$query2 = "UPDATE users SET usertype = ? WHERE username = ?";
+				$query2 = "UPDATE $users SET usertype = ? WHERE username = ?";
 				$result2 = $link->UpdateRow($query2, [$_POST['usertype'], $username]);
 
 				if ($result2 == 1) {

@@ -4,11 +4,16 @@ if ($usertype > 0) {
 	
 	$link = new DB();
 
-	$query = "SELECT COUNT(*) FROM linemessages";
+	$frk = BasicConfig::$_prefix;
+	$linemessages = $frk.'linemessages';
+
+	$query = "SELECT COUNT(*) FROM $linemessages";
 	$result0 = $link->GetRow($query);
+	
 	$total = ($result0['COUNT(*)']);
 	$limit = parent::$_limit_linemessages;
 	$page = isset($_GET['content2']) ? $_GET['content2'] : 1;
+	
 	$start = $limit * ($page-1);
 	$num_page = ceil($total/$limit);
 
@@ -16,7 +21,7 @@ if ($usertype > 0) {
 		<h1>$c[all_messages]</h1>
 	";
 
-	$query1 = "SELECT * FROM linemessages LIMIT $start, $limit";
+	$query1 = "SELECT * FROM $linemessages LIMIT $start, $limit";
 	$result1 = $link->GetRows($query1);
 
 	foreach ($result1 as $r) {

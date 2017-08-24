@@ -2,9 +2,12 @@
 
 if ($usertype == 4) {
 
+	$frk = BasicConfig::$_prefix;
+	$comments = $frk.'comments';
+
 	$link = new DB();
 
-	$query0 = "SELECT COUNT(*) FROM comments";
+	$query0 = "SELECT COUNT(*) FROM $comments";
 	$result0 = $link->GetRow($query0);
 	$total = ($result0['COUNT(*)']);
 	$limit = parent::$_limit_comments;
@@ -13,7 +16,7 @@ if ($usertype == 4) {
 	$start = $limit * ($page-1);
 	$num_page = ceil($total/$limit);
 
-	$query = "SELECT * FROM comments LIMIT $start, $limit";
+	$query = "SELECT * FROM $comments LIMIT $start, $limit";
 	$result = $link->GetRows($query);
 
 	if (empty($result)) {

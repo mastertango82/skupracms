@@ -1,11 +1,14 @@
 <?php
 
 if ($usertype > 2) {
+	
+	$frk = BasicConfig::$_prefix;
+	$statuses = $frk.'statuses';
 
 	if (isset($_POST['del_old'])) {
 
 		$link = new DB();
-		$query1 = "SELECT COUNT(*) FROM statuses";
+		$query1 = "SELECT COUNT(*) FROM $statuses";
 		$result1 = $link->GetRow($query1);
 
 		$total = $result1['COUNT(*)'];
@@ -18,7 +21,7 @@ if ($usertype > 2) {
 			$limit = 0;
 		}
 
-		$query2 = "DELETE FROM statuses ORDER BY status_id ASC LIMIT $limit";
+		$query2 = "DELETE FROM $statuses ORDER BY status_id ASC LIMIT $limit";
 		$result2 = $link->DeleteRow($query2);
 
 		if ($result2 > 0) {
@@ -36,7 +39,7 @@ if ($usertype > 2) {
 	} else if (isset($_POST['del_all'])) {
 
 		$link = new DB();
-		$query = "DELETE FROM statuses";
+		$query = "DELETE FROM $statuses";
 		$result = $link->DeleteRow($query);
 
 		if ($result > 0) {
@@ -58,7 +61,7 @@ if ($usertype > 2) {
 		$stat_id = $_POST['stat_id'];
 
 		$link = new DB();
-		$query = "DELETE FROM statuses WHERE status_id = ?";
+		$query = "DELETE FROM $statuses WHERE status_id = ?";
 		$result = $link->DeleteRow($query, [$stat_id]);
 
 		header("Location: ".$home.$lang.'/statuses');
