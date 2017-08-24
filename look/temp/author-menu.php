@@ -3,7 +3,7 @@
 $menu = "
 	<form action='' method='post'>
 	<ul>
-		<li id='site'><a href='".$home."' title='$c[home]'><img id='logo' src='".$home."look/img/logo.png'>$c[title]</a></li>
+		<li id='site'><a href='".$home."' title='$c[home]'><img id='logo' src='".$home."look/img/logo.png'>$e[title]</a></li>
 		<li class='dropdown'>
 			<a href='#' title='$c[articles]' class='dropbtn'><i class='fa fa-pencil fa-lg' title='$c[articles]'></i></a>
 			<div class='dropdown-content'>

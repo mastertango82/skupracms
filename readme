@@ -1,0 +1,11 @@
+// SKUPRA CMS //
+
+Instalacioni folder mora da glasi: "installation"
+
+Kad je sajt instaliran, njemu se stavi ime: umesto "installation" stavi se "installation_" na primer.
+
+basic-config.php - sadrži podatke o bazi
+
+Kada se pravi novi sajt taj fajl se popunjava. Prekopira ga sistem, ne moraju da se brišu trenutni podaci i ne smeju. Mora da postoji ime klase.
+
+// END //

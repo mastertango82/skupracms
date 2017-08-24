@@ -32,6 +32,8 @@ class Content extends ExtraConfig {
 		$site = BasicConfig::$_site;
 		$home = BasicConfig::$_home;
 
+		$e = parent::MetaBase();
+
 		$default_content = parent::$_default_content;
 
 	    $content1 = (isset($_GET['content1'])) ? '/'.$_GET['content1'] : '/'.$default_content;

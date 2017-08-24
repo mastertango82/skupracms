@@ -12,11 +12,11 @@ $result = $link->GetRows($query, [1, 1]);
 if ($_SESSION[$site]['userlang'] === 'sr-la' OR $_SESSION[$site]['userlang'] === 'sr-ci') {
 
 	$header = 'header_sr';
-	$myworks = 'Моји радови';
+	$ourworks = 'Наши радови';
 } else {
 	
 	$header = 'header_en';
-	$myworks = 'My works';
+	$ourworks = 'Our works';
 }
 
 $article = '';
@@ -26,7 +26,7 @@ foreach ($result as $r) {
 	$article .= "<a href='".$home.$lang.'/'.$r['cat_seo_name'].'/'.$r['seo']."'>$r[$header]</a>";
 }
 
-$article .= "<a href='".$home.$lang.'/myworks'."'>$myworks</a>";
+$article .= "<a href='".$home.$lang.'/our-works'."'>$ourworks</a>";
 
 $output = "
 	<p>$article</p>

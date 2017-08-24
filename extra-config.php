@@ -37,8 +37,8 @@ class ExtraConfig {
 				'font'			=> $home.'look/css/font.php',
 				'awesome'		=> $home.'look/fonts/font-awesome-4.7.0/css/font-awesome.min.css',
 				'style'			=> $home.'look/css/site.css',
-				'maintitle'		=> 'DNewBlog',
-				'motto'			=> 'a place we need...'
+				'maintitle'		=> 'Скупра',
+				'title'			=> 'Скупра'
 			);
 		} else {
 
@@ -53,8 +53,8 @@ class ExtraConfig {
 				'font'			=> $home.'look/css/font.php',
 				'awesome'		=> $home.'look/fonts/font-awesome-4.7.0/css/font-awesome.min.css',
 				'style'			=> $home.'look/css/site.css',
-				'maintitle'		=> 'ДНовиБлог',
-				'motto'			=> 'место које нам треба...'
+				'maintitle'		=> 'Skupra',
+				'title'			=> 'Skupra'
 			);
 		}
 
